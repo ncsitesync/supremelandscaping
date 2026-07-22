@@ -138,12 +138,33 @@ h3 { font-size: 1.35rem; text-transform: uppercase; }
 .hero { position: relative; height: 100svh; min-height: 100vh; overflow: hidden; background: var(--forest); }
 .hero-media { position: absolute; inset: 0; }
 .hero-media video, .hero-media canvas { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
+/* Real hero photography. background-position is biased down from dead-center (60%
+   instead of 50%) so that on very wide/short desktop viewports — where cover crops
+   top and bottom rather than the sides — the crop eats into the sky first and keeps
+   the lawn/landscaping in frame. On tall mobile viewports cover crops the sides
+   instead, and the photo's subject (the house + front beds) already sits on the
+   horizontal center, so no separate mobile override is needed. */
+.hero-photo {
+  position: absolute; inset: 0;
+  background-image: url("../supremehero.png");
+  background-size: cover;
+  background-position: center 60%;
+  background-repeat: no-repeat;
+}
+/* The animated-leaves canvas was a placeholder for when there was no real hero
+   imagery yet. Now that a real photo is in place, it's switched off rather than
+   left to drift distractingly on top of it — the JS still runs harmlessly, it
+   just has nothing visible to draw into. */
+.hero-media canvas { display: none; }
 .hero-topo {
-  position: absolute; inset: 0; opacity: 0.14; mix-blend-mode: overlay;
+  position: absolute; inset: 0; opacity: 0.1; mix-blend-mode: overlay;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400' viewBox='0 0 400 400'%3E%3Cg fill='none' stroke='%23A8D93E' stroke-width='1'%3E%3Cellipse cx='120' cy='100' rx='60' ry='40'/%3E%3Cellipse cx='120' cy='100' rx='100' ry='70'/%3E%3Cellipse cx='120' cy='100' rx='140' ry='100'/%3E%3Cellipse cx='300' cy='320' rx='70' ry='45'/%3E%3Cellipse cx='300' cy='320' rx='115' ry='78'/%3E%3Cellipse cx='300' cy='320' rx='160' ry='112'/%3E%3C/g%3E%3C/svg%3E");
   background-size: 700px 700px; background-repeat: repeat;
 }
-.hero-grade { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(15,36,16,0.55) 0%, rgba(15,36,16,0.25) 40%, rgba(15,36,16,0.75) 100%); }
+/* Dark scrim so hero text stays legible over a bright photo (sky, white siding,
+   sunlit lawn) — darkest where the text block sits (bottom two-thirds), lighter
+   in a band behind the logo so the photo still reads as a photo, not a wash. */
+.hero-grade { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(6,15,7,0.68) 0%, rgba(6,15,7,0.4) 32%, rgba(6,15,7,0.58) 55%, rgba(6,15,7,0.87) 100%); }
 
 .hero-inner {
   position: relative; z-index: 2; height: 100%;
